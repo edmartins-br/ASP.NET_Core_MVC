@@ -44,9 +44,12 @@ namespace SalesWebMvc
             builder.MigrationsAssembly("SalesWebMvc")));
 
             // registra o serviço no sistema de injeção de dependencia da aplicação (passo 2 do material de apoio)
+            
+            // REGISTRAR SERVIÇOS  para o mecanismo de injeção de dependência
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerService>(); // agora pode sr injetado em outras classes
             services.AddScoped<DepartmentService>();
+            services.AddScoped<SalesRecordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
