@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace SalesWebMvc.Models
@@ -8,8 +9,20 @@ namespace SalesWebMvc.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        [Display(Name = "E-mail")]
+
+        [DataType(DataType.EmailAddress)] // coloca o Mailto nos emails
         public string Email { get; set; }
+
+        [Display(Name="Birth Date")] // mostra o que está nesta TAG e não o nome da classe
+        [DataType(DataType.Date)] // Elimina hora e minuto do modelo padrão e deixa somente a data
+        
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:F2}")] // formata o valor com duas casas decimais
+        [Display(Name = "Base Salary")]
         public double BaseSalary { get; set; }
 
         // Seller possui um departamento
