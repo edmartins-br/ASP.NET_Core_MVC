@@ -40,6 +40,13 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken] // previnir que a aplicação sofra ataque CSRF - quando alguem aproveita a sua sessao de autenticação e envia adados maliciosos aproveitando sua autenticação
         public IActionResult Create(Seller seller)
         {
+            // ete if serve para impedir a requisição ao servidor caso o JavScript esteja desabilitado e não faça a verificação
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                return View(viewModel);
+            }
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index)); // usa Name Of pois se mudar a string da ação no metodo de cima, não precisa mudar nada aqui
         }
@@ -104,7 +111,15 @@ namespace SalesWebMvc.Controllers
         [AutoValidateAntiforgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
-            if(id != seller.Id)
+            // ete if serve para impedir a requisição ao servidor caso o JavScript esteja desabilitado e não faça a verificação
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                return View(viewModel);
+            }
+
+            if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch!" });
             }
